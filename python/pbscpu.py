@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Author: Martin Souchal 
+# Author: Martin Souchal <souchal@apc.in2p3.fr>
 # Date  : 20 oct 2016
 # Desc. : CPU slot report for APC Cluster
 #
@@ -11,11 +11,12 @@ import pbs
 from PBSQuery import PBSQuery
 from PBSQuery import PBSError
 import sys
+import re
 
 def countcpu(queue):
     p = PBSQuery()
     p.new_data_structure()
-    nodes = p.getnodes("*")
+    nodes = p.getnodes()
     nptot = 0
     for id in nodes:
         if nodes[id].properties == [queue]:
@@ -27,7 +28,7 @@ def countcpu(queue):
                 print detail
             pass
     return nptot
-    
+
 def countppn(queue):
     p = PBSQuery()
     p.new_data_structure()
@@ -37,12 +38,19 @@ def countppn(queue):
         try:
             if jobs[id].queue[0] == queue and jobs[id].job_state[0] == 'R':
                 np = jobs[id].Resource_List.nodes
-                np = np[0].split('=')
-                nu = len(np)
-                if nu == 1:
+                ct = [m.start() for m in re.finditer('ppn', np[0])]
+                if ct == []:
                     np = 1
                 else:
-                    np = int(np[1])
+                    npptot = 0
+                    for val in ct:
+                        char = np[0]
+                        vals = val+4
+                        valf = val+6
+                        npp = char[vals:valf]
+                        npp = int(npp)
+                        npptot = npp + npptot
+                    np = npptot
                 nptot = np + nptot
         except PBSError, detail:
             print detail
