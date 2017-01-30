@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+# Utilisation en temps réel du cluster
+# Instant utilisation of the cluster (Node name, State, Power State, queue allocation, numbers of core and jobs
+# Martin Souchal 2017
 
 import pbs
 from PBSQuery import PBSQuery
