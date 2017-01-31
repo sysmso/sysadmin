@@ -38,18 +38,19 @@ def countppn(queue):
         try:
             if jobs[id].queue[0] == queue and jobs[id].job_state[0] == 'R':
                 np = jobs[id].Resource_List.nodes
-                ct = [m.start() for m in re.finditer('ppn', np[0])]
-                if ct == []:
+                if 'ppn' not in np[0]:
                     np = 1
                 else:
                     npptot = 0
+		    ct = [m.start() for m in re.finditer('ppn', np[0])]
                     for val in ct:
                         char = np[0]
                         vals = val+4
                         valf = val+6
                         npp = char[vals:valf]
+			npp = re.sub('[!@#+:$]', '', npp)
                         npp = int(npp)
-                        npptot = npp + npptot
+			npptot = npp + npptot
                     np = npptot
                 nptot = np + nptot
         except PBSError, detail:
