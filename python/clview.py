@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-# Utilisation en temps réel du cluster
-# Instant utilisation of the cluster (Node name, State, Power State, queue allocation, numbers of core and jobs
-# Martin Souchal 2017
 
 import pbs
 from PBSQuery import PBSQuery
@@ -24,7 +21,10 @@ def main():
             name = nodes[id].name
             if hasattr(nodes[id],"jobs"):
                 jobs = nodes[id].jobs[0].split('/')
-                jobs = jobs[1]
+		if len(jobs) > 1:
+                    jobs = jobs[1]
+	        else:
+		    jobs = jobs[0]	
             else:
                 jobs = "none"
             l.append([name,state,power,queue,np,jobs])
