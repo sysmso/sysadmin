@@ -14,6 +14,7 @@ borg create -v --stats --compression lz4 --progress       \
     --exclude '/home/*/docker'                  \
     --exclude '/home/*/.PlayOnLinux'            \
     --exclude '/home/ssysmso/AUR'               \
+    --exclude '/home/ssysmso/tmp'               \
     --exclude '*.avi'                           \
     --exclude '*.mkv'                           \
     --exclude '*.mp4'                           \
