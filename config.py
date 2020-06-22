@@ -72,6 +72,8 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown()),
     Key([mod], "r", lazy.spawncmd()),
 
+    Key([mod], "l", lazy.spawn("/usr/bin/i3lock")),
+
     # Sound
     Key([], "XF86AudioMute", lazy.spawn("amixer -q set Master toggle")),
     Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -c 0 sset Master 1- unmute")),
@@ -117,7 +119,7 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        wallpaper='/usr/share/backgrounds/gnome/Wood.jpg',
+        wallpaper='.local/share/spotlight/background.jpg',
         wallpaper_mode='fill',
         bottom=bar.Bar(
             [
@@ -126,11 +128,17 @@ screens = [
                 widget.Prompt(),
                 widget.WindowName(),
                 widget.Systray(),
-                widget.Clock(format='%a %d %m %Y [%I:%M %p]'),
+                widget.TextBox("|"),
+                widget.Clock(format='%a %d %m %Y [%H:%M]'),
+                widget.TextBox("|"),
                 widget.CPU(format='CPU {freq_current}GHz {load_percent}%',update_interval=1.0,padding = 5),
+                 widget.TextBox("|"),
                 widget.Memory(),
+                 widget.TextBox("|"),
                 widget.Net(),
+                 widget.TextBox("|"),
                 widget.Volume(),
+                 widget.TextBox("|"),
                 widget.QuickExit(),
             ],
             24,
