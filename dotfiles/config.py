@@ -62,7 +62,7 @@ keys = [
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
     Key([mod, "shift"], "Return", lazy.layout.toggle_split()),
-    Key([mod], "Return", lazy.spawn("terminator")),
+    Key([mod], "Return", lazy.spawn("alacritty")),
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout()),
@@ -72,7 +72,7 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown()),
     Key([mod], "r", lazy.spawncmd()),
 
-    Key([mod], "l", lazy.spawn("/usr/bin/i3lock")),
+    Key([mod], "l", lazy.spawn("/usr/bin/i3lock -i /home/marty/Images/macOSBigSur.png")),
 
     # Sound
     Key([], "XF86AudioMute", lazy.spawn("amixer -q set Master toggle")),
@@ -101,7 +101,7 @@ layouts = [
     # layout.Bsp(),
     # layout.Columns(),
     layout.Matrix(),
-    # layout.MonadTall(),
+    layout.MonadTall(),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
@@ -127,15 +127,16 @@ screens = [
                 widget.GroupBox(),
                 widget.Prompt(),
                 widget.WindowName(),
+                widget.Mpris2(objname='org.mpris.MediaPlayer2.spotify'),
                 widget.Systray(),
                 widget.TextBox("|"),
                 widget.Clock(format='%a %d %m %Y [%H:%M]'),
                 widget.TextBox("|"),
-                widget.CPU(format='CPU {freq_current}GHz {load_percent}%',update_interval=1.0,padding = 5),
+                widget.CPUGraph(format='CPU {freq_current}GHz {load_percent}%',update_interval=1.0,padding = 5),
                  widget.TextBox("|"),
-                widget.Memory(),
+                widget.MemoryGraph(),
                  widget.TextBox("|"),
-                widget.Net(),
+                widget.NetGraph(),
                  widget.TextBox("|"),
                 widget.Volume(),
                  widget.TextBox("|"),
